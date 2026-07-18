@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="src/AnimalShelter.Api/AnimalShelter.Api.csproj" />
   <Project Path="src/AnimalShelter.AppHost/AnimalShelter.AppHost.csproj" Id="a818723d-80de-468e-ac8a-20d3303fe025" />
+  <Project Path="src/AnimalShelter.MigrationService/AnimalShelter.MigrationService.csproj" />
   <Project Path="src/AnimalShelter.ServiceDefaults/AnimalShelter.ServiceDefaults.csproj" />
 </Solution>

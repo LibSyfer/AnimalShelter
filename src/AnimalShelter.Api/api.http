@@ -1,0 +1,29 @@
+@host = https://localhost:7215
+
+### Создать животное
+POST {{host}}/animals
+Content-Type: application/json
+
+{
+  "name": "Рекс",
+  "species": "Собака",
+  "dateOfBirth": "2022-05-01"
+}
+
+### Создать животное с датой прибытия
+POST {{host}}/animals
+Content-Type: application/json
+
+{
+  "name": "Жора",
+  "species": "Собака",
+  "dateOfBirth": "2022-05-01",
+  "intakeDate": "2026-07-10T00:00:00Z"
+}
+
+### Получить животное по id
+@animalId = 019f75ab-4c8a-7b23-9176-289af9b8e60d
+GET {{host}}/animals/{{animalId}}
+
+### Получить животное по id (п ригодится позже
+GET {{host}}/animals?Page=1&PageSize=10
