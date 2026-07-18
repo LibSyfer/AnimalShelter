@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.AddNpgsqlDbContext<ShelterDbContext>("animalshelterdb");
-builder.Services.AddAnimalsModule();
+builder.AddAnimalsModule();
 
 var app = builder.Build();
 

@@ -6,12 +6,12 @@ namespace AnimalShelter.Api.Modules.Animals;
 
 public static class AnimalsModule
 {
-    public static IServiceCollection AddAnimalsModule(this IServiceCollection services)
+    public static TBuilder AddAnimalsModule<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
-        return services;
+        return builder;
     }
 
-    public static IEndpointRouteBuilder MapAnimalsEndpoints(this IEndpointRouteBuilder builder)
+    public static TBuilder MapAnimalsEndpoints<TBuilder>(this TBuilder builder) where TBuilder : IEndpointRouteBuilder
     {
         builder.MapCreateAnimal();
         builder.MapGetAnimalById();
