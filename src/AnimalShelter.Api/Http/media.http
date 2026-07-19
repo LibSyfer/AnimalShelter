@@ -1,0 +1,20 @@
+@host = https://localhost:7215
+
+### 1. Запросить загрузку
+# @name requestUpload
+POST {{host}}/uploads
+Content-Type: application/json
+
+{
+  "originalFileName": "rex.jpg",
+  "contentType": "image/jpeg"
+}
+
+### 2. Залить файл в MinIO по presigned URL
+PUT {{requestUpload.response.body.$.uploadUrl}}
+Content-Type: image/jpeg
+
+< ./rex.jpg
+
+### 3. Подтвердить загрузку
+PUT {{host}}/uploads/{{requestUpload.response.body.$.fileObjectId}}

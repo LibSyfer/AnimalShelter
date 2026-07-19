@@ -1,6 +1,7 @@
 @host = https://localhost:7215
 
 ### Создать животное
+# @name createAnimal
 POST {{host}}/animals
 Content-Type: application/json
 
@@ -22,8 +23,7 @@ Content-Type: application/json
 }
 
 ### Получить животное по id
-@animalId = 019f75ab-4c8a-7b23-9176-289af9b8e60d
-GET {{host}}/animals/{{animalId}}
+GET {{host}}/animals/{{createAnimal.response.body.$.id}}
 
-### Получить животное по id (п ригодится позже
+### Список животных с пагинацией
 GET {{host}}/animals?Page=1&PageSize=10
