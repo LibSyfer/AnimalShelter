@@ -1,4 +1,5 @@
 ﻿using AnimalShelter.Api.Modules.Animals.Features.AddGalleryPhotos;
+using AnimalShelter.Api.Modules.Animals.Features.ChangeAnimalAvatar;
 using AnimalShelter.Api.Modules.Animals.Features.CreateAnimal;
 using AnimalShelter.Api.Modules.Animals.Features.GetAnimalById;
 using AnimalShelter.Api.Modules.Animals.Features.ListAnimals;
@@ -19,6 +20,7 @@ public static class AnimalsModule
         builder.MapCreateAnimal();
         builder.MapGetAnimalById();
         builder.MapListAnimals();
+        builder.MapChangeAnimalAvatar();
 
         builder.MapAddGalleryPhotos();
         builder.MapRemoveGalleryPhotos();
