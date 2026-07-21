@@ -3,6 +3,7 @@ using System;
 using AnimalShelter.Api.Shared.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AnimalShelter.Api.Migrations
 {
     [DbContext(typeof(ShelterDbContext))]
-    partial class ShelterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260721210429_SyncGalleryRenamesAndUniqueIndex")]
+    partial class SyncGalleryRenamesAndUniqueIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +61,7 @@ namespace AnimalShelter.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Animals", (string)null);
+                    b.ToTable("Animals");
                 });
 
             modelBuilder.Entity("AnimalShelter.Api.Modules.Animals.Domain.AnimalGalleryPhoto", b =>
@@ -81,7 +84,7 @@ namespace AnimalShelter.Api.Migrations
                     b.HasIndex("AnimalId", "FileId")
                         .IsUnique();
 
-                    b.ToTable("AnimalGalleryPhotos", (string)null);
+                    b.ToTable("AnimalGalleryPhotos");
                 });
 
             modelBuilder.Entity("AnimalShelter.Api.Modules.Media.Domain.FileObject", b =>
@@ -131,7 +134,7 @@ namespace AnimalShelter.Api.Migrations
                     b.HasIndex("StorageKey")
                         .IsUnique();
 
-                    b.ToTable("FileObjects", (string)null);
+                    b.ToTable("FileObjects");
                 });
 
             modelBuilder.Entity("AnimalShelter.Api.Modules.Animals.Domain.AnimalGalleryPhoto", b =>

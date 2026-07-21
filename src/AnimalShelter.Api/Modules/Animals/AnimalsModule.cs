@@ -1,6 +1,9 @@
-﻿using AnimalShelter.Api.Modules.Animals.Features.CreateAnimal;
+﻿using AnimalShelter.Api.Modules.Animals.Features.AddGalleryPhotos;
+using AnimalShelter.Api.Modules.Animals.Features.CreateAnimal;
 using AnimalShelter.Api.Modules.Animals.Features.GetAnimalById;
 using AnimalShelter.Api.Modules.Animals.Features.ListAnimals;
+using AnimalShelter.Api.Modules.Animals.Features.ListGalleryPhotos;
+using AnimalShelter.Api.Modules.Animals.Features.RemoveGalleryPhotos;
 
 namespace AnimalShelter.Api.Modules.Animals;
 
@@ -16,6 +19,10 @@ public static class AnimalsModule
         builder.MapCreateAnimal();
         builder.MapGetAnimalById();
         builder.MapListAnimals();
+
+        builder.MapAddGalleryPhotos();
+        builder.MapRemoveGalleryPhotos();
+        builder.MapListGalleryPhotos();
 
         return builder;
     }

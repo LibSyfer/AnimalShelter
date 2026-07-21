@@ -1,4 +1,5 @@
 ﻿using AnimalShelter.Api.Modules.Animals.Domain;
+using AnimalShelter.Api.Modules.Media.Public;
 using AnimalShelter.Api.Shared.Infrastructure;
 
 namespace AnimalShelter.Api.Modules.Animals.Features.GetAnimalById;
@@ -9,7 +10,8 @@ public record GetAnimalByIdResponse(
     string Species,
     AnimalStatus Status,
     DateOnly DateOfBirth,
-    DateTime IntakeDate);
+    DateTime IntakeDate,
+    string? AvatarUrl);
 
 public static class GetAnimalByIdEndpoint
 {
@@ -18,10 +20,15 @@ public static class GetAnimalByIdEndpoint
         builder.MapGet("/animals/{id:guid}", async (
             Guid id,
             ShelterDbContext context,
+            IMediaUrlProvider mediaUrlProvider,
             CancellationToken cancellationToken) =>
         {
             var animal = await context.Animals.FindAsync([id], cancellationToken);
             if (animal is null) return Results.NotFound();
+
+            var avatarUrl = animal.AvatarFileId.HasValue
+                ? await mediaUrlProvider.GetPublicUrlAsync(animal.AvatarFileId.Value, cancellationToken)
+                : null;
 
             var response = new GetAnimalByIdResponse(
                 animal.Id,
@@ -29,7 +36,8 @@ public static class GetAnimalByIdEndpoint
                 animal.Species,
                 animal.Status,
                 animal.DateOfBirth,
-                animal.IntakeDate);
+                animal.IntakeDate,
+                avatarUrl);
 
             return Results.Ok(response);
         });

@@ -2,6 +2,7 @@
 using AnimalShelter.Api.Modules.Media.Features.ConfirmUpload;
 using AnimalShelter.Api.Modules.Media.Features.RequestUpload;
 using AnimalShelter.Api.Modules.Media.Infrastructure;
+using AnimalShelter.Api.Modules.Media.Public;
 using Microsoft.Extensions.Options;
 
 namespace AnimalShelter.Api.Modules.Media;
@@ -30,7 +31,9 @@ public static class MediaModule
                 s3Config);
         });
 
+        builder.Services.AddScoped<IMediaUrlProvider, MediaUrlProvider>();
         builder.Services.AddScoped<PresignedUrlGenerator>();
+        builder.Services.AddSingleton<PublicUrlBuilder>();
 
         builder.Services.AddHostedService<BucketInitializer>();
 

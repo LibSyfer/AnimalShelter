@@ -1,7 +1,6 @@
 ﻿using AnimalShelter.Api.Modules.Media.Domain;
 using AnimalShelter.Api.Modules.Media.Infrastructure;
 using AnimalShelter.Api.Shared.Infrastructure;
-using Microsoft.Extensions.Options;
 using System.Collections.Frozen;
 
 namespace AnimalShelter.Api.Modules.Media.Features.RequestUpload;

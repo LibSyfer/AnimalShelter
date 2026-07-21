@@ -1,5 +1,3 @@
-@host = https://localhost:7215
-
 ### 1. Запросить загрузку
 # @name requestUpload
 POST {{host}}/uploads
@@ -14,7 +12,7 @@ Content-Type: application/json
 PUT {{requestUpload.response.body.$.uploadUrl}}
 Content-Type: image/jpeg
 
-< ./rex.jpg
+<@ ./TestData/rex.jpg
 
 ### 3. Подтвердить загрузку
 PUT {{host}}/uploads/{{requestUpload.response.body.$.fileObjectId}}

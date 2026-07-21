@@ -1,6 +1,5 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
-using AnimalShelter.Api.Modules.Media.Domain;
 using Microsoft.Extensions.Options;
 
 namespace AnimalShelter.Api.Modules.Media.Infrastructure;
@@ -14,24 +13,11 @@ public class PresignedUrlGenerator(
     {
         var request = new GetPreSignedUrlRequest
         {
-            BucketName = options.Value.BucketName,
+            BucketName = options.Value.PublicBucketName,
             Key = storageKey,
             Verb = HttpVerb.PUT,
-            Expires = timeProvider.GetUtcNow().UtcDateTime.AddMinutes(15),
-            ContentType = contentType
-        };
-
-        return GenerateUrl(request);
-    }
-
-    public string GenerateDownloadUrl(string storageKey, TimeSpan lifetime)
-    {
-        var request = new GetPreSignedUrlRequest
-        {
-            BucketName = options.Value.BucketName,
-            Key = storageKey,
-            Verb = HttpVerb.GET,
             Expires = timeProvider.GetUtcNow().UtcDateTime.Add(lifetime),
+            ContentType = contentType
         };
 
         return GenerateUrl(request);

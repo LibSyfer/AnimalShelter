@@ -3,6 +3,7 @@ using System;
 using AnimalShelter.Api.Shared.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AnimalShelter.Api.Migrations
 {
     [DbContext(typeof(ShelterDbContext))]
-    partial class ShelterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260721150456_ReworkedAnimalPhotos")]
+    partial class ReworkedAnimalPhotos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +34,7 @@ namespace AnimalShelter.Api.Migrations
                     b.Property<DateTime?>("AdoptionDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("AvatarFileId")
+                    b.Property<Guid?>("AvatarId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
@@ -58,7 +61,7 @@ namespace AnimalShelter.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Animals", (string)null);
+                    b.ToTable("Animals");
                 });
 
             modelBuilder.Entity("AnimalShelter.Api.Modules.Animals.Domain.AnimalGalleryPhoto", b =>
@@ -73,15 +76,14 @@ namespace AnimalShelter.Api.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("FileId")
+                    b.Property<Guid>("FileObjectId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnimalId", "FileId")
-                        .IsUnique();
+                    b.HasIndex("AnimalId");
 
-                    b.ToTable("AnimalGalleryPhotos", (string)null);
+                    b.ToTable("AnimalGalleryPhotos");
                 });
 
             modelBuilder.Entity("AnimalShelter.Api.Modules.Media.Domain.FileObject", b =>
@@ -131,7 +133,7 @@ namespace AnimalShelter.Api.Migrations
                     b.HasIndex("StorageKey")
                         .IsUnique();
 
-                    b.ToTable("FileObjects", (string)null);
+                    b.ToTable("FileObjects");
                 });
 
             modelBuilder.Entity("AnimalShelter.Api.Modules.Animals.Domain.AnimalGalleryPhoto", b =>

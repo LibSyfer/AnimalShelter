@@ -7,6 +7,12 @@ using System.Net;
 
 namespace AnimalShelter.Api.Modules.Media.Features.ConfirmUpload;
 
+public record ConfirmUploadResponse(
+    Guid Id,
+    long SizeInBytes,
+    string Url,
+    DateTime? UploadedAt);
+
 public static class ConfirmUploadEndpoint
 {
     public static void MapConfirmUpload(this IEndpointRouteBuilder builder)
@@ -17,6 +23,7 @@ public static class ConfirmUploadEndpoint
             IAmazonS3 s3,
             IOptions<S3StorageOptions> options,
             TimeProvider timeProvider,
+            PublicUrlBuilder urlBuilder,
             CancellationToken cancellationToken) =>
         {
             var fileObject = await context.FileObjects.FindAsync([id], cancellationToken);
@@ -28,8 +35,8 @@ public static class ConfirmUploadEndpoint
 
             try
             {
-                var metadata = await s3.GetObjectMetadataAsync(options.Value.BucketName, fileObject.StorageKey, cancellationToken);
-                fileObject.Status = FileObjectStatus.Ready;
+                var metadata = await s3.GetObjectMetadataAsync(options.Value.PublicBucketName, fileObject.StorageKey, cancellationToken);
+                fileObject.Status = FileObjectStatus.Ready; 
                 fileObject.SizeInBytes = metadata.ContentLength;
                 fileObject.UploadedAt = timeProvider.GetUtcNow().UtcDateTime;
             }
@@ -40,7 +47,11 @@ public static class ConfirmUploadEndpoint
 
             await context.SaveChangesAsync(cancellationToken);
 
-            return Results.Ok();
+            return Results.Ok(new ConfirmUploadResponse(
+                fileObject.Id,
+                fileObject.SizeInBytes,
+                urlBuilder.Build(fileObject.StorageKey),
+                fileObject.UploadedAt));
         });
     }
 }

@@ -10,6 +10,7 @@ public class Animal
     public DateTime IntakeDate { get; set; }
     public DateTime? AdoptionDate { get; set; }
     public DateTime CreatedAt { get; set; }
+    public Guid? AvatarFileId { get; set; }
 }
 
 public enum AnimalStatus
