@@ -1,5 +1,4 @@
-﻿using AnimalShelter.Common.Modules.Files;
-using AnimalShelter.Module.Files.Domain;
+﻿using AnimalShelter.Module.Files.Domain;
 using System.Collections.Frozen;
 
 namespace AnimalShelter.Module.Files.Infrastructure;
