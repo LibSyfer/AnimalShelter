@@ -1,4 +1,4 @@
-﻿using AnimalShelter.Common.Modules.Files;
+﻿using AnimalShelter.Common.PublicApis;
 using AnimalShelter.Module.Files.Domain;
 using AnimalShelter.Module.Files.Dtos;
 using AnimalShelter.Module.Files.Features.GetContentUrl;

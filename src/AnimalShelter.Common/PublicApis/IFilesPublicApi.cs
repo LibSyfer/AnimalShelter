@@ -1,4 +1,4 @@
-﻿namespace AnimalShelter.Common.Modules.Files;
+﻿namespace AnimalShelter.Common.PublicApis;
 
 public interface IFilesPublicApi
 {

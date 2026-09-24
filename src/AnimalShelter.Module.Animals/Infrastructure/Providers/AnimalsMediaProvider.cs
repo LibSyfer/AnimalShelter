@@ -1,4 +1,4 @@
-﻿using AnimalShelter.Common.Modules.Files;
+﻿using AnimalShelter.Common.PublicApis;
 using AnimalShelter.Module.Animals.Domain;
 using AnimalShelter.Module.Animals.Errors;
 using ErrorOr;

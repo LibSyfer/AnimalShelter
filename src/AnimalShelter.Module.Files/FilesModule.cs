@@ -1,6 +1,6 @@
 ﻿using Amazon.Runtime;
 using Amazon.S3;
-using AnimalShelter.Common.Modules.Files;
+using AnimalShelter.Common.PublicApis;
 using AnimalShelter.Common.Shared;
 using AnimalShelter.Module.Files.Features.ConfirmUpload;
 using AnimalShelter.Module.Files.Features.CreateUploadIntent;
