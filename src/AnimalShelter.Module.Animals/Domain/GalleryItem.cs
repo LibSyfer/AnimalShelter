@@ -18,7 +18,7 @@ internal sealed class GalleryItem : EntityBase
     public static ErrorOr<GalleryItem> Create(Guid animalId, MediaFile file, DateTimeOffset now)
     {
         if (!AwailableGalleryItemKinds.Contains(file.Kind))
-            return GalleryItemErrors.UnavailableMedia(file);
+            return GalleryItemErrors.UnavailableMedia(file.Id);
 
         return new GalleryItem
         {

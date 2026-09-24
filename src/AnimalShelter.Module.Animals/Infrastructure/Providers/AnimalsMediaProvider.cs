@@ -15,15 +15,11 @@ internal sealed class AnimalsMediaProvider(
         var metadata = await filesPublicApi.GetMetadataAsync(fileId, ct);
         if (metadata is null)
         {
-            logger.LogWarning("Cannot resolve media url of file: {fileId}", fileId);
+            logger.LogWarning("Cannot get media metadata of file: {FileId}", fileId);
             return MediaErrors.Unavailable(fileId);
         }
 
-        var mediaFile = Map(metadata);
-        if (mediaFile is null)
-            return MediaErrors.UnsupportedKind(fileId);
-
-        return mediaFile;
+        return Map(metadata);
     }
 
     public async Task<ErrorOr<IReadOnlyDictionary<Guid, MediaFile>>> GetManyAsync(IReadOnlyCollection<Guid> filesIds, CancellationToken ct)
@@ -39,21 +35,9 @@ internal sealed class AnimalsMediaProvider(
             return unresolvedErrors;
         }
 
-        var mediaFiles = new Dictionary<Guid, MediaFile>(metadatas.Count);
-        var unsupportedKindFiles = new List<Error>();
-
-        foreach(var (id, metadata) in metadatas)
-        {
-            if (Map(metadata) is { } mediaFile)
-                mediaFiles[id] = mediaFile;
-            else
-                unsupportedKindFiles.Add(MediaErrors.UnsupportedKind(id));
-        }
-
-        if (unsupportedKindFiles.Count > 0)
-            return unsupportedKindFiles;
-
-        return mediaFiles;
+        return metadatas.ToDictionary(
+            m => m.Key,
+            m => Map(m.Value));
     }
 
     public Task<IReadOnlyDictionary<Guid, Uri>> GetManyUrlsAsync(IReadOnlyCollection<Guid> filesIds, CancellationToken ct)
@@ -62,7 +46,7 @@ internal sealed class AnimalsMediaProvider(
     public Task<Uri?> GetUrlAsync(Guid fileId, CancellationToken ct)
         => filesPublicApi.GetContentUrlAsync(fileId, ct);
 
-    private static MediaFile? Map(FileMetadata file)
+    private static MediaFile Map(FileMetadata file)
     {
         MediaFileKind kind = file.Kind switch
         {
@@ -70,9 +54,6 @@ internal sealed class AnimalsMediaProvider(
             FileContentKind.Video => MediaFileKind.Video,
             _ => MediaFileKind.Unsupported
         };
-
-        if (kind == MediaFileKind.Unsupported)
-            return null;
 
         return new MediaFile(file.Id, kind);
     }

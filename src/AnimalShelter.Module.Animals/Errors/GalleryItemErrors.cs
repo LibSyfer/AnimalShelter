@@ -5,10 +5,10 @@ namespace AnimalShelter.Module.Animals.Errors;
 
 internal static class GalleryItemErrors
 {
-    public static Error UnavailableMedia(MediaFile file)
+    public static Error UnavailableMedia(Guid fileId)
         => Error.Conflict("GalleryItem.UnavailableMedia",
-            $"File {file.Id} of type {file.Kind.ToString()} cannot be gallery media. " +
-            $"Supported kinds {GalleryItem.AwailableGalleryItemKinds}");
+            $"File {fileId} has unsupported gallery media type. " +
+            $"Supported kinds: {GalleryItem.AwailableGalleryItemKinds}");
 
     public static Error ExceedingAdditionLimit(int count, int limit)
         => BatchLimitExceeded("ExceedingAdditionLimit", "upload", count, limit);
