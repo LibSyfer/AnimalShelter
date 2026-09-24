@@ -50,8 +50,8 @@ internal sealed class AnimalsMediaProvider(
     {
         MediaFileKind kind = file.Kind switch
         {
-            FileContentKind.Image => MediaFileKind.Image,
-            FileContentKind.Video => MediaFileKind.Video,
+            FileKind.Image => MediaFileKind.Image,
+            FileKind.Video => MediaFileKind.Video,
             _ => MediaFileKind.Unsupported
         };
 

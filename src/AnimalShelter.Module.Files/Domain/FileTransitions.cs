@@ -4,13 +4,13 @@ namespace AnimalShelter.Module.Files.Domain;
 
 internal static class FileTransitions
 {
-    public static readonly FrozenDictionary<FileStatus, FileStatus[]> AllowedTargets
-        = new Dictionary<FileStatus, FileStatus[]>
+    public static readonly FrozenDictionary<FileObjectStatus, FileObjectStatus[]> AllowedTargets
+        = new Dictionary<FileObjectStatus, FileObjectStatus[]>
         {
-            [FileStatus.Pending]    = [FileStatus.Ready],
-            [FileStatus.Ready]      = [FileStatus.Deleted]
+            [FileObjectStatus.Pending]    = [FileObjectStatus.Ready],
+            [FileObjectStatus.Ready]      = [FileObjectStatus.Deleted]
         }.ToFrozenDictionary();
 
-    public static bool CanTransition(FileStatus from, FileStatus to)
+    public static bool CanTransition(FileObjectStatus from, FileObjectStatus to)
         => AllowedTargets.TryGetValue(from, out var targets) && targets.Contains(to);
 }

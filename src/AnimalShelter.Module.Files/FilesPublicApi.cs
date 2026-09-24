@@ -1,4 +1,5 @@
 ﻿using AnimalShelter.Common.Modules.Files;
+using AnimalShelter.Module.Files.Domain;
 using AnimalShelter.Module.Files.Dtos;
 using AnimalShelter.Module.Files.Features.GetContentUrl;
 using AnimalShelter.Module.Files.Features.GetFile;
@@ -8,8 +9,8 @@ using AnimalShelter.Module.Files.Features.GetManyFiles;
 namespace AnimalShelter.Module.Files;
 
 internal sealed class FilesPublicApi(
-    GetFileHandler getFile,
-    GetManyFilesHandler getManyFiles,
+    GetReadyFileHanlder getFile,
+    GetManyReadyFilesHandler getManyFiles,
     GetContentUrlHandler getContentUrl,
     GetManyContentUrlsHandler getManyContentUrls)
     : IFilesPublicApi
@@ -36,5 +37,13 @@ internal sealed class FilesPublicApi(
     }
 
     private static FileMetadata ToFileMetadata(FileDto dto)
-        => new(dto.Id, dto.Status, dto.OriginalName, dto.ContentType, dto.Kind);
+        => new(dto.Id, dto.OriginalName, Map(dto.Kind));
+
+    private static FileKind Map(FileObjectKind kind) => kind switch
+    {
+        FileObjectKind.Image => FileKind.Image,
+        FileObjectKind.Video => FileKind.Video,
+        FileObjectKind.Unknown => FileKind.Unknown,
+        _ => FileKind.Unknown
+    };
 }

@@ -4,7 +4,6 @@ using AnimalShelter.Common.Modules.Files;
 using AnimalShelter.Common.Shared;
 using AnimalShelter.Module.Files.Features.ConfirmUpload;
 using AnimalShelter.Module.Files.Features.CreateUploadIntent;
-using AnimalShelter.Module.Files.Features.DeleteFile;
 using AnimalShelter.Module.Files.Features.GetContentUrl;
 using AnimalShelter.Module.Files.Features.GetFile;
 using AnimalShelter.Module.Files.Features.GetManyContentUrlsHandler;
@@ -52,11 +51,10 @@ public static class FilesModule
 
         services.AddScoped<CreateUploadIntentHandler>();
         services.AddScoped<ConfirmUploadHandler>();
-        services.AddScoped<GetFileHandler>();
-        services.AddScoped<GetManyFilesHandler>();
+        services.AddScoped<GetVisibleFileHandler>();
+        services.AddScoped<GetManyVisibleFilesHandler>();
         services.AddScoped<GetContentUrlHandler>();
         services.AddScoped<GetManyContentUrlsHandler>();
-        services.AddScoped<DeleteFileHandler>();
 
         services.AddScoped<IFilesPublicApi, FilesPublicApi>();
 
@@ -76,16 +74,12 @@ public static class FilesModule
             => (await handler.HandleAsync(id, ct)).ToHttpResult());
 
         group.MapGet("/{id:guid}",
-            async (Guid id, GetFileHandler handler, CancellationToken ct)
+            async (Guid id, GetVisibleFileHandler handler, CancellationToken ct)
             => (await handler.HandleAsync(id, ct)).ToHttpResult());
 
         group.MapGet("/{id:guid}/content",
             async (Guid id, GetContentUrlHandler handler, CancellationToken ct)
             => (await handler.HandleAsync(id, ct)).ToHttpResult(url => Results.Redirect(url.ToString())));
-
-        group.MapDelete("/{id:guid}",
-            async (Guid id, DeleteFileHandler handler, CancellationToken ct)
-            => (await handler.HandleAsync(id, ct)).ToHttpResult());
 
         return app;
     }

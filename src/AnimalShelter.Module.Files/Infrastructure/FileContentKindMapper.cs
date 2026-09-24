@@ -1,21 +1,21 @@
 ﻿using AnimalShelter.Common.Modules.Files;
+using AnimalShelter.Module.Files.Domain;
 using System.Collections.Frozen;
 
 namespace AnimalShelter.Module.Files.Infrastructure;
 
 internal static class FileContentKindMapper
 {
-    private static readonly FrozenDictionary<string, FileContentKind> _mappings
-        = new Dictionary<string, FileContentKind>(StringComparer.OrdinalIgnoreCase)
+    private static readonly FrozenDictionary<string, FileObjectKind> _mappings
+        = new Dictionary<string, FileObjectKind>(StringComparer.OrdinalIgnoreCase)
         {
-            ["image/jpeg"] = FileContentKind.Image,
-            ["image/png"] = FileContentKind.Image,
-            ["image/webp"] = FileContentKind.Image,
-            ["video/mp4"] = FileContentKind.Video,
-            ["video/quicktime"] = FileContentKind.Video,
-            ["application/pdf"] = FileContentKind.Document
+            ["image/jpeg"] = FileObjectKind.Image,
+            ["image/png"] = FileObjectKind.Image,
+            ["image/webp"] = FileObjectKind.Image,
+            ["video/mp4"] = FileObjectKind.Video,
+            ["video/quicktime"] = FileObjectKind.Video
         }.ToFrozenDictionary();
 
-    public static FileContentKind Map(string contentType)
-        => _mappings.GetValueOrDefault(contentType, FileContentKind.Unknown);
+    public static FileObjectKind Map(string contentType)
+        => _mappings.GetValueOrDefault(contentType, FileObjectKind.Unknown);
 }

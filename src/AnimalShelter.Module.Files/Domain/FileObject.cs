@@ -1,16 +1,15 @@
 ﻿using AnimalShelter.Common.Abstracts;
-using AnimalShelter.Common.Modules.Files;
 
 namespace AnimalShelter.Module.Files.Domain;
 
 internal sealed class FileObject : EntityBase
 {
     public string StorageKey { get; private set; } = null!;
-    public FileStatus Status { get; private set; }
+    public FileObjectStatus Status { get; private set; }
 
     public string OriginalName { get; private set; } = null!;
     public string ContentType { get; private set; } = null!;
-    public FileContentKind Kind { get; private set; }
+    public FileObjectKind Kind { get; private set; }
     public long Size { get; private set; }
 
     private FileObject() { }
@@ -27,18 +26,18 @@ internal sealed class FileObject : EntityBase
             OriginalName = originalName,
             ContentType = contentType,
             Size = size,
-            Status = FileStatus.Pending,
+            Status = FileObjectStatus.Pending,
             CreatedAt = now
         };
     }
 
     public void MarkReady(DateTimeOffset now)
-        => TransitTo(FileStatus.Ready);
+        => TransitTo(FileObjectStatus.Ready);
 
     public void MarkDeleted(DateTimeOffset now)
-        => TransitTo(FileStatus.Deleted);
+        => TransitTo(FileObjectStatus.Deleted);
 
-    private void TransitTo(FileStatus to)
+    private void TransitTo(FileObjectStatus to)
     {
         if (!FileTransitions.CanTransition(Status, to))
             throw new InvalidOperationException(
@@ -48,9 +47,16 @@ internal sealed class FileObject : EntityBase
     }
 }
 
-internal enum FileStatus
+internal enum FileObjectStatus
 {
     Pending = 0,
     Ready = 1,
     Deleted = 2
+}
+
+internal enum FileObjectKind
+{
+    Unknown = 0,
+    Image = 1,
+    Video = 2
 }

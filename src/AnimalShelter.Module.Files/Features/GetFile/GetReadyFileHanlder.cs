@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AnimalShelter.Module.Files.Features.GetFile;
 
-internal sealed class GetFileHandler(
+internal sealed class GetReadyFileHanlder(
     FilesDbContext context)
     : IFeatureHandler<Guid, ErrorOr<FileDto>>
 {
     public async Task<ErrorOr<FileDto>> HandleAsync(Guid fileId, CancellationToken ct)
     {
         var file = await context.Files.AsNoTracking()
-            .Visible()
+            .Ready()
             .FirstOrDefaultAsync(f => f.Id == fileId, ct);
         if (file is null)
             return FileErrors.NotFound(fileId);

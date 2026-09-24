@@ -10,16 +10,12 @@ public interface IFilesPublicApi
 
 public sealed record FileMetadata(
     Guid Id,
-    string Status,
     string Name,
-    string ContentType,
-    FileContentKind Kind);
+    FileKind Kind);
 
-public enum FileContentKind
+public enum FileKind
 {
     Unknown = 0,
     Image = 1,
-    Video = 2,
-    Audio = 3,
-    Document = 4
+    Video = 2
 }

@@ -21,7 +21,7 @@ internal sealed class ConfirmUploadHandler(
         if (file is null)
             return FileErrors.NotFound(fileId);
 
-        if (file.Status is not FileStatus.Pending)
+        if (file.Status is not FileObjectStatus.Pending)
             return FileDto.From(file);
 
         if (!await storage.ExistsAsync(file.StorageKey, ct))
