@@ -52,7 +52,9 @@ public static class FilesModule
         services.AddScoped<CreateUploadIntentHandler>();
         services.AddScoped<ConfirmUploadHandler>();
         services.AddScoped<GetVisibleFileHandler>();
+        services.AddScoped<GetReadyFileHandler>();
         services.AddScoped<GetManyVisibleFilesHandler>();
+        services.AddScoped<GetManyReadyFilesHandler>();
         services.AddScoped<GetContentUrlHandler>();
         services.AddScoped<GetManyContentUrlsHandler>();
 

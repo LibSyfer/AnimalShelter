@@ -22,9 +22,10 @@ internal sealed class FilesDbContext : DbContext
             e.HasKey(x => x.Id);
 
             e.Property(x => x.StorageKey).HasMaxLength(1024).IsRequired();
+            e.Property(x => x.Status).HasConversion<string>();
             e.Property(x => x.OriginalName).HasMaxLength(512).IsRequired();
             e.Property(x => x.ContentType).HasMaxLength(128).IsRequired();
-            e.Property(x => x.Status).HasConversion<string>();
+            e.Property(x => x.Kind).HasConversion<string>();
         });
     }
 }

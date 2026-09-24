@@ -43,7 +43,6 @@ internal sealed class FilesPublicApi(
     {
         FileObjectKind.Image => FileKind.Image,
         FileObjectKind.Video => FileKind.Video,
-        FileObjectKind.Unknown => FileKind.Unknown,
         _ => FileKind.Unknown
     };
 }
