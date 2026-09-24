@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AnimalShelter.Module.Files.Features.GetFile;
 
-internal sealed class GetReadyFileHanlder(
+internal sealed class GetReadyFileHandler(
     FilesDbContext context)
     : IFeatureHandler<Guid, ErrorOr<FileDto>>
 {

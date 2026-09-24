@@ -9,7 +9,7 @@ using AnimalShelter.Module.Files.Features.GetManyFiles;
 namespace AnimalShelter.Module.Files;
 
 internal sealed class FilesPublicApi(
-    GetReadyFileHanlder getFile,
+    GetReadyFileHandler getFile,
     GetManyReadyFilesHandler getManyFiles,
     GetContentUrlHandler getContentUrl,
     GetManyContentUrlsHandler getManyContentUrls)
